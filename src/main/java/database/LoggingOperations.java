@@ -19,7 +19,7 @@ public class LoggingOperations {
 		try {
 			Database db = new Database();
 
-			con = db.startConnection();
+			con = db.startAdminConnection();
 			String sql = "SELECT * FROM users WHERE login = ? AND password = ?";
 			st = con.prepareStatement(sql);
 			st.setString(1, login);

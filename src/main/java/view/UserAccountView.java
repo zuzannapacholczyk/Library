@@ -19,12 +19,14 @@ public class UserAccountView extends JPanel{
 	private JTextField passwordUserTextField;
 	private JTextField nameUserTextField;
 	private JTextField surnameUserTextField;
-	private JList listRights;
+	private JList<String> listRights;
 	private JButton btnDodaj_2;
 	private JButton btnUsun_2;
 	private JButton btnZmien;
+	private String rights = "r";
 
-	public UserAccountView() {
+	public UserAccountView(String string) {
+		this.setRights(string);
 		GridBagLayout gbl_userAccountPanel = new GridBagLayout();
 		gbl_userAccountPanel.columnWidths = new int[]{300,400};
 		gbl_userAccountPanel.rowHeights = new int[]{30,30,30,30,30,30,30, 210};
@@ -107,7 +109,7 @@ public class UserAccountView extends JPanel{
 		gbc_lblPrawaUzytkownika.gridy = 5;
 		this.add(lblPrawaUzytkownika, gbc_lblPrawaUzytkownika);
 		
-		listRights = new JList();
+		listRights = new JList<String>();
 		GridBagConstraints gbc_listRights = new GridBagConstraints();
 		gbc_listRights.gridwidth = 4;
 		gbc_listRights.insets = new Insets(0, 0, 5, 0);
@@ -137,5 +139,13 @@ public class UserAccountView extends JPanel{
 		gbc_btnZmien.gridy = 6;
 		this.add(btnZmien, gbc_btnZmien);
 
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 }

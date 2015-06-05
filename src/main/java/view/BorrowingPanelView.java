@@ -23,8 +23,11 @@ public class BorrowingPanelView extends JPanel {
 	private JTextField authorTextField;
 	private JButton btnWypozycz;
 	private JButton btnPrzyjmijZwrot;
+	
+	private String rights = "r";
 
-	public BorrowingPanelView() {
+	public BorrowingPanelView(String string) {
+		this.setRights(string);
 		GridBagLayout gbl_borrowingPanel = new GridBagLayout();
 		gbl_borrowingPanel.columnWidths = new int[] { 150, 200, 150, 200 };
 		gbl_borrowingPanel.rowHeights = new int[] { 50, 30, 30, 30, 30, 250 };
@@ -156,6 +159,14 @@ public class BorrowingPanelView extends JPanel {
 		gbc_btnPrzyjmijZwrot.gridx = 3;
 		gbc_btnPrzyjmijZwrot.gridy = 4;
 		this.add(btnPrzyjmijZwrot, gbc_btnPrzyjmijZwrot);
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 
 }

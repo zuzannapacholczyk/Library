@@ -23,8 +23,10 @@ public class AuthorsView extends JPanel{
 	private JTextField surnameAuthorTextField;
 	private JTextField nameAuthorTextField;
 	private JTextField numberAuthorTextField;
-
-	public AuthorsView() {
+	private String rights = "r";
+	
+	public AuthorsView(String string) {
+		this.setRights(string);
 		GridBagLayout gbl_authorsPanel = new GridBagLayout();
 		gbl_authorsPanel.columnWidths = new int[]{350,200,50,50,50};
 		gbl_authorsPanel.rowHeights = new int[]{30,30,30,30, 280};
@@ -113,5 +115,13 @@ public class AuthorsView extends JPanel{
 		gbc_tableAuthor.gridy = 4;
 		this.add(searchAuthorResultTable, gbc_tableAuthor);
 		
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 }

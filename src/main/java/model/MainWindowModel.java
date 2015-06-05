@@ -1,20 +1,22 @@
-package start;
+package model;
 
-import model.LoggingWindowModel;
 import controller.LoggingWindowController;
 import view.LoggingWindowView;
+import view.MainWindow;
 
-public class StartLibrary {
+public class MainWindowModel {
+	private MainWindow view;
 
-	public static void main(String[] args) {
-		openLoggingWindow();
+	public MainWindowModel(MainWindow view) {
+		this.view = view;
 	}
-
-	private static void openLoggingWindow() {
+	
+	public void logOut() {
+		this.view.setVisible(false);
 		LoggingWindowView loggingWindowView = new LoggingWindowView();
 		loggingWindowView.setVisible(true);
 		LoggingWindowModel loggingWindowModel = new LoggingWindowModel(loggingWindowView);
 		LoggingWindowController loggingWindowController = new LoggingWindowController(loggingWindowModel, loggingWindowView);
-		loggingWindowController.contolButton();
+		loggingWindowController.contolButton();		
 	}
 }

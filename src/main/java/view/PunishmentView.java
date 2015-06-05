@@ -22,8 +22,10 @@ public class PunishmentView extends JPanel{
 	private JButton btnOplacWszystkie;
 	private JTextField namePunishTextField;
 	private JTextField readerNumberPunishTextField;
+	private String rights = "r";
 
-	public PunishmentView() {
+	public PunishmentView(String string) {
+		this.setRights(string);
 		GridBagLayout gbl_punishmentPanel = new GridBagLayout();
 		gbl_punishmentPanel.columnWidths = new int[] { 350, 350 };
 		gbl_punishmentPanel.rowHeights = new int[] { 30, 30, 30, 30, 250, 30 };
@@ -100,6 +102,14 @@ public class PunishmentView extends JPanel{
 		gbc_btnOplacWszystkie.gridx = 1;
 		gbc_btnOplacWszystkie.gridy = 5;
 		this.add(btnOplacWszystkie, gbc_btnOplacWszystkie);
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 
 }

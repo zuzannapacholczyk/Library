@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -20,16 +19,16 @@ public class BooksView extends JPanel {
 	private JButton btnDodaj_1;
 	private JButton btnUsun_1;
 	private JTable authorBookResultTable;
-	private Container authorsPanel;
 	private JButton btnDodajAutora_1;
-	private JList listDepartments;
+	private JList<String> listDepartments;
 	private JTextField issuerBooksTextField;
 	private JTextField yearBooksTextField;
 	private JTextField titleBooksTextField;
 	private JTextField copyIdBooksTextField;
 	private JTextField bookIdBooksTextField;
-
-	public BooksView() {
+	private String rights = "r";
+	public BooksView(String string) {
+		this.setRights(string);
 		GridBagLayout gbl_booksPanel = new GridBagLayout();
 		gbl_booksPanel.columnWidths = new int[]{200,300,50,50,50};
 		gbl_booksPanel.rowHeights = new int[]{30,30,30,30,30, 30, 30,190};
@@ -129,13 +128,13 @@ public class BooksView extends JPanel {
 		gbc_lblDzial.gridy = 5;
 		this.add(lblDzial, gbc_lblDzial);
 		
-		listDepartments = new JList();
+		listDepartments = new JList<String>();
 		GridBagConstraints gbc_listDepartments = new GridBagConstraints();
 		gbc_listDepartments.insets = new Insets(0, 0, 5, 0);
 		gbc_listDepartments.fill = GridBagConstraints.BOTH;
 		gbc_listDepartments.gridx = 1;
 		gbc_listDepartments.gridy = 7;
-		authorsPanel.add(listDepartments, gbc_listDepartments);
+		this.add(listDepartments, gbc_listDepartments);
 		
 		btnDodajAutora_1 = new JButton("Dodaj autora");
 		GridBagConstraints gbc_btnDodajAutora_1 = new GridBagConstraints();
@@ -166,5 +165,11 @@ public class BooksView extends JPanel {
 		gbc_authorsBookTable.gridx = 0;
 		gbc_authorsBookTable.gridy = 7;
 		this.add(authorBookResultTable, gbc_authorsBookTable);
+	}
+	public String getRights() {
+		return rights;
+	}
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 }

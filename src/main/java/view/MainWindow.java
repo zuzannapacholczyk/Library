@@ -7,70 +7,101 @@ import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3172688540921699213L;
-	private static JFrame mainFrame;
-	private static JLabel welcomeTextLabel;
-	private static JButton loggingButton;
-	/**
-	 * @param args
-	 */
-	/**
-	 * @param args
-	 */
-	/**
-	 * @param args
-	 */
-	public MainWindow() {
+	private JLabel welcomeTextLabel;
+	private JButton loggingButton;
+	private JTabbedPane tabbedPane;
 
-		mainFrame = new JFrame("Biblioteka");
-		mainFrame.setSize(701, 501);
-		mainFrame.setLocation(10, 10);
-		//mainFrame.getContentPane().add(BorderLayout.CENTER);
+	public MainWindow(String rights) {
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		mainFrame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		this.setTitle("Biblioteka");
+		this.setSize(801, 501);
+		this.setLocation(10, 10);
 
-		JPanel bookSearchPanel = new BookSearchPanelView();
-		tabbedPane.addTab("Wyszukaj ksiazke", null, bookSearchPanel, null);
-		
-		JPanel borrowingPanel = new JPanel();
-		tabbedPane.addTab("Wypozycz ksiazke", null, borrowingPanel, null);
-		
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-		JPanel punishmentPanel = new JPanel();
-		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
-		
-
-		JPanel authorsPanel = new JPanel();
-		tabbedPane.addTab("Autorzy", null, authorsPanel,
-				null);	
-		
-		JPanel booksPanel = new JPanel();
-		tabbedPane.addTab("Ksiegozbior", null, booksPanel,
-				null);	
-		
-		
-		JPanel departmentPanel = new JPanel();
-		tabbedPane.addTab("Dzialy", null, departmentPanel,
-				null);	
-		
-
-		JPanel userAccountPanel = new JPanel();
-		tabbedPane.addTab("Konta uzytkownikow", null, userAccountPanel, null);
+		if (rights.equals("a"))
+			createTabsForAdmin();
+		else if (rights.equals("l"))
+			createTabsForLibrarian();
+		else createTabsForReader();
 
 		JPanel topPanel = new JPanel();
-		mainFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
+		this.getContentPane().add(topPanel, BorderLayout.NORTH);
 
 		welcomeTextLabel = new JLabel("Welcome");
 		topPanel.add(welcomeTextLabel);
-		loggingButton = new JButton("Zaloguj");
+		loggingButton = new JButton("Wyloguj");
 		topPanel.add(loggingButton);
-		mainFrame.setVisible(true);
+		this.setVisible(true);
+	}
 
+	private void createTabsForReader() {
+		BookSearchPanelView bookSearchPanel = new BookSearchPanelView("r");
+		tabbedPane.addTab("Wyszukaj ksiazke", null, bookSearchPanel, null);
+
+	}
+
+	private void createTabsForAdmin() {
+		BookSearchPanelView bookSearchPanel = new BookSearchPanelView("a");
+		tabbedPane.addTab("Wyszukaj ksiazke", null, bookSearchPanel, null);
+
+		BorrowingPanelView borrowingPanel = new BorrowingPanelView("a");
+		tabbedPane.addTab("Wypozycz ksiazke", null, borrowingPanel, null);
+
+		PunishmentView punishmentPanel = new PunishmentView("a");
+		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
+
+		AuthorsView authorsPanel = new AuthorsView("a");
+		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
+
+		BooksView booksPanel = new BooksView("a");
+		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
+
+		DepartmentView departmentPanel = new DepartmentView("a");
+		tabbedPane.addTab("Dzialy", null, departmentPanel, null);
+
+		UserAccountView userAccountPanel = new UserAccountView("a");
+		tabbedPane.addTab("Konta uzytkownikow", null, userAccountPanel, null);
+
+	}
+
+	private void createTabsForLibrarian() {
+		BookSearchPanelView bookSearchPanel = new BookSearchPanelView("l");
+		tabbedPane.addTab("Wyszukaj ksiazke", null, bookSearchPanel, null);
+
+		BorrowingPanelView borrowingPanel = new BorrowingPanelView("l");
+		tabbedPane.addTab("Wypozycz ksiazke", null, borrowingPanel, null);
+
+		PunishmentView punishmentPanel = new PunishmentView("l");
+		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
+
+		AuthorsView authorsPanel = new AuthorsView("l");
+		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
+
+		BooksView booksPanel = new BooksView("l");
+		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
+
+		DepartmentView departmentPanel = new DepartmentView("l");
+		tabbedPane.addTab("Dzialy", null, departmentPanel, null);
+
+	}
+
+	public JTabbedPane getTabbedPane() {
+		return this.tabbedPane;
+	}
+
+	public void setWelcomeTextLabel(String text) {
+		this.welcomeTextLabel.setText("Witaj " + text);
+	}
+
+	public JButton getLoggingButton() {
+		return this.loggingButton;
 	}
 }

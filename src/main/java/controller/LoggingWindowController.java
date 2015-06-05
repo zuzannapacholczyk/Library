@@ -8,7 +8,7 @@ import view.LoggingWindowView;
 
 public class LoggingWindowController {
 	private LoggingWindowModel model;
-	private LoggingWindowView view;
+	public LoggingWindowView view;
 	private ActionListener actionListener;
 	
 	public LoggingWindowController(LoggingWindowModel model, LoggingWindowView view) {
@@ -20,17 +20,10 @@ public class LoggingWindowController {
         actionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				loginUser();
+				model.loginUser();
 				
 			}
         };                
         view.getBtnZaloguj().addActionListener(actionListener);   
     }
-    
-	private void loginUser() {
-		String login = view.getLoginTextField_1();
-		String password = new String(view.getPasswordTextField_1());
-		model.checkLoginAndPassword(login, password);
-		
-	}
 }

@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import controller.BookSearchPanelController;
+import model.BookSearchPanelModel;
+
 public class BookSearchPanelView extends JPanel{
 	
 	/**
@@ -18,11 +21,14 @@ public class BookSearchPanelView extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField searchTextField2;
-	private JList list;
+	private JList<String> list;
 	private JButton searchButton;
 	private JTable searchBookResultTable;
+	
+	private String rights = "r";
 
-	public BookSearchPanelView() {
+	public BookSearchPanelView(String rights) {
+		this.setRights(rights);
 		GridBagLayout gbl_bookSearchPanel = new GridBagLayout();
 		gbl_bookSearchPanel.columnWidths = new int[] { 240, 440 };
 		gbl_bookSearchPanel.rowHeights = new int[] { 20, 30, 30, 30, 300 };
@@ -55,7 +61,7 @@ public class BookSearchPanelView extends JPanel{
 		gbc_lblNewLabel_1.gridy = 2;
 		this.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
-		list = new JList();
+		list = new JList<String>();
 		GridBagConstraints gbc_list = new GridBagConstraints();
 		gbc_list.insets = new Insets(0, 0, 5, 0);
 		gbc_list.fill = GridBagConstraints.BOTH;
@@ -78,7 +84,34 @@ public class BookSearchPanelView extends JPanel{
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 4;
 		this.add(searchBookResultTable, gbc_table);
+		BookSearchPanelModel model = new BookSearchPanelModel(this);
+		BookSearchPanelController controller = new BookSearchPanelController(model, this);
+		controller.control();
 
+	}
+	
+	public JButton getSearchButton() {
+		return this.searchButton;
+	}
+	
+	public int[] getChosenListElements() {
+		return this.list.getSelectedIndices();
+	}
+	
+	public void setListElements(String[] list) {
+		this.list.setListData(list);
+	}
+	
+	public String getPhrase() {
+		return this.searchTextField2.getText();
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 
 }

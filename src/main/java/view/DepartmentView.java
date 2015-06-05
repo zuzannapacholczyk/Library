@@ -20,8 +20,10 @@ public class DepartmentView extends JPanel {
 	private Component btnDodaj_3;
 	private JButton btnUsun_3;
 	private JTextField numberDepartmentTextField;
+	private String rights = "r";
 
-	public DepartmentView() {
+	public DepartmentView(String string) {
+		this.setRights(string);
 		GridBagLayout gbl_departmentPanel = new GridBagLayout();
 		gbl_departmentPanel.columnWidths = new int[]{300,300,50,50};
 		gbl_departmentPanel.rowHeights = new int[]{30,30,30,300};
@@ -76,6 +78,14 @@ public class DepartmentView extends JPanel {
 		gbc_btnUsun_3.gridx = 3;
 		gbc_btnUsun_3.gridy = 2;
 		this.add(btnUsun_3, gbc_btnUsun_3);
+	}
+
+	public String getRights() {
+		return rights;
+	}
+
+	public void setRights(String rights) {
+		this.rights = rights;
 	}
 
 }

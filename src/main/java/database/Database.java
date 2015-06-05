@@ -15,11 +15,42 @@ public class Database {
 	ResultSet rs = null;
 
 	String url = "jdbc:postgresql://localhost/biblioteka";
-	String user = "administrator";
-	String password = "administrator";
 
-	public Connection startConnection() {
+
+	public Connection startAdminConnection() {
 		try {
+			String user = "administrator";
+			String password = "administrator";
+			con = DriverManager.getConnection(url, user, password);
+			return con;
+
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Database.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+
+			return null;
+		}
+	}
+	
+	public Connection startLibrarianConnection() {
+		try {
+			String user = "librarian";
+			String password = "librarian";
+			con = DriverManager.getConnection(url, user, password);
+			return con;
+
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Database.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+
+			return null;
+		}
+	}
+	
+	public Connection startReaderConnection() {
+		try {
+			String user = "reader";
+			String password = "reader";
 			con = DriverManager.getConnection(url, user, password);
 			return con;
 

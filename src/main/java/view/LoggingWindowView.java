@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
@@ -23,6 +24,8 @@ public class LoggingWindowView extends JFrame{
 	private JPasswordField passwordTextField;
 
 	private JButton btnZaloguj;
+
+	private JLabel errorLabel;
 	public LoggingWindowView() {
 
 		this.setTitle("Logowanie");
@@ -76,6 +79,15 @@ public class LoggingWindowView extends JFrame{
 		gbc_btnZaloguj.gridx = 2;
 		gbc_btnZaloguj.gridy = 4;
 		getContentPane().add(btnZaloguj, gbc_btnZaloguj);
+		
+		errorLabel = new JLabel("");
+		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
+		gbc_errorLabel.gridwidth = 3;
+		gbc_errorLabel.anchor = GridBagConstraints.EAST;
+		gbc_errorLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_errorLabel.gridx = 0;
+		gbc_errorLabel.gridy = 5;
+		getContentPane().add(errorLabel, gbc_errorLabel);
 	}
 	public String getLoginTextField_1() {
 		return loginTextField_1.getText();
@@ -93,6 +105,11 @@ public class LoggingWindowView extends JFrame{
 	
 	public JButton getBtnZaloguj() {
 		return btnZaloguj;
+	}
+	
+	public void setErrorLabel(String error) {
+		this.errorLabel.setForeground (Color.red);
+		this.errorLabel.setText(error);
 	}
 
 }

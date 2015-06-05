@@ -75,7 +75,27 @@ public class PunishmentPanelModel {
 	}
 
 	public void payForAllPunishments() {
-		// TODO Auto-generated method stub
+		if (resultList == null || resultList.size() == 0) {
+			ErrorDialog error = new ErrorDialog();
+			error.showError("Brak kar do oplacenia");
+		}
+		else {
+			int[] borrowingIds = {};
+			int i = 0;
+			for(FoundPunishment punishment : resultList) {
+				borrowingIds[i] = punishment.getBorrowingId();
+				i++;
+			}
+			PunishmentOperations punishmentOperations = new PunishmentOperations();
+			if(punishmentOperations.payForAllPunishments(borrowingIds, view.getRights())) {
+				ErrorDialog error = new ErrorDialog();
+				error.showSuccess("Pomyslnie oplacono");
+			}
+			else {
+				ErrorDialog error = new ErrorDialog();
+				error.showError("Blad przy wprowadzaniu oplat");
+			}
+		}
 
 	}
 

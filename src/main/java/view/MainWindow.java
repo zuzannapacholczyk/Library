@@ -58,13 +58,13 @@ public class MainWindow extends JFrame {
 		PunishmentView punishmentPanel = new PunishmentView("a");
 		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
 
-		AuthorsView authorsPanel = new AuthorsView("a");
+		AuthorsPanelView authorsPanel = new AuthorsPanelView("a");
 		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
 
 		BooksView booksPanel = new BooksView("a");
 		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
 
-		DepartmentView departmentPanel = new DepartmentView("a");
+		DepartmentPanelView departmentPanel = new DepartmentPanelView("a");
 		tabbedPane.addTab("Dzialy", null, departmentPanel, null);
 
 		UserAccountView userAccountPanel = new UserAccountView("a");
@@ -82,13 +82,13 @@ public class MainWindow extends JFrame {
 		PunishmentView punishmentPanel = new PunishmentView("l");
 		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
 
-		AuthorsView authorsPanel = new AuthorsView("l");
+		AuthorsPanelView authorsPanel = new AuthorsPanelView("l");
 		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
 
 		BooksView booksPanel = new BooksView("l");
 		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
 
-		DepartmentView departmentPanel = new DepartmentView("l");
+		DepartmentPanelView departmentPanel = new DepartmentPanelView("l");
 		tabbedPane.addTab("Dzialy", null, departmentPanel, null);
 
 	}

@@ -8,19 +8,21 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class LogingWindowView extends JFrame{
+public class LoggingWindowView extends JFrame{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1433114895703338520L;
-	private JFrame mainFrame;
+
 	private JTextField loginTextField_1;
 	private JTextField passwordTextField;
-	public LogingWindowView() {
-		
-		mainFrame = new JFrame("Logowanie");
-		mainFrame.setSize(300, 200);
-		mainFrame.setLocation(10, 10);
+
+	private JButton btnZaloguj;
+	public LoggingWindowView() {
+
+		this.setTitle("Logowanie");
+		this.setSize(300, 200);
+		this.setLocation(10, 10);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{50,50,100,};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
@@ -64,11 +66,28 @@ public class LogingWindowView extends JFrame{
 		getContentPane().add(passwordTextField, gbc_textField);
 		passwordTextField.setColumns(10);
 		
-		JButton btnZaloguj = new JButton("Zaloguj");
+		btnZaloguj = new JButton("Zaloguj");
 		GridBagConstraints gbc_btnZaloguj = new GridBagConstraints();
 		gbc_btnZaloguj.gridx = 2;
 		gbc_btnZaloguj.gridy = 4;
 		getContentPane().add(btnZaloguj, gbc_btnZaloguj);
+	}
+	public String getLoginTextField_1() {
+		return loginTextField_1.getText();
+	}
+	public void setLoginTextField_1(String loginTextField_1) {
+		this.loginTextField_1.setText(loginTextField_1);
+	}
+	
+	public String getPasswordTextField_1() {
+		return passwordTextField.getText();
+	}
+	public void setPasswordTextField_1(String passwordTextField) {
+		this.passwordTextField.setText(passwordTextField);
+	}
+	
+	public JButton getBtnZaloguj() {
+		return btnZaloguj;
 	}
 
 }

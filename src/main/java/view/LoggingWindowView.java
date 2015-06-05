@@ -1,10 +1,15 @@
 package view;
 
 import javax.swing.JFrame;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -15,7 +20,7 @@ public class LoggingWindowView extends JFrame{
 	private static final long serialVersionUID = -1433114895703338520L;
 
 	private JTextField loginTextField_1;
-	private JTextField passwordTextField;
+	private JPasswordField passwordTextField;
 
 	private JButton btnZaloguj;
 	public LoggingWindowView() {
@@ -56,7 +61,7 @@ public class LoggingWindowView extends JFrame{
 		gbc_label_1.gridy = 3;
 		getContentPane().add(label_1, gbc_label_1);
 		
-		passwordTextField = new JTextField();
+		passwordTextField = new JPasswordField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 2;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -79,8 +84,8 @@ public class LoggingWindowView extends JFrame{
 		this.loginTextField_1.setText(loginTextField_1);
 	}
 	
-	public String getPasswordTextField_1() {
-		return passwordTextField.getText();
+	public char[] getPasswordTextField_1() {
+		return passwordTextField.getPassword();
 	}
 	public void setPasswordTextField_1(String passwordTextField) {
 		this.passwordTextField.setText(passwordTextField);

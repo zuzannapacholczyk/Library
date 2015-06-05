@@ -29,7 +29,7 @@ public class LoggingWindowController {
     
 	private void loginUser() {
 		String login = view.getLoginTextField_1();
-		String password = view.getPasswordTextField_1();
+		String password = new String(view.getPasswordTextField_1());
 		model.checkLoginAndPassword(login, password);
 		
 	}

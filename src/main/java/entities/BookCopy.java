@@ -15,6 +15,9 @@ public class BookCopy {
 		this.setPublisher(publisher);
 	}
 
+	public BookCopy() {
+	}
+
 	public int getId() {
 		return id;
 	}

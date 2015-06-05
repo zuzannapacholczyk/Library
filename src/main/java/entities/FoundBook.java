@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FoundBook {
 
 	private int id;
@@ -90,5 +93,21 @@ public class FoundBook {
 	
 	public String getTitle() {
 		return title;
+	}
+	
+	public List<String> changeIntoList() {
+		List<String> elems = new ArrayList<String>();
+		elems.add(Integer.toString(getId()));
+		elems.add(getTitle());
+		elems.add(getAuthorName());
+		elems.add(getAuthorSurname());
+		elems.add(Integer.toString(getDepartmentId()));
+		elems.add(getIssueNumber());
+		elems.add(getPublisher());
+		if(isIfAvailable())
+			elems.add("tak");
+		else
+			elems.add("nie");
+		return elems;
 	}
 }

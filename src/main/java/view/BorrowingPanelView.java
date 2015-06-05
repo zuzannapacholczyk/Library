@@ -9,6 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.BookSearchPanelModel;
+import model.BorrowingPanelModel;
+import controller.BookSearchPanelController;
+import controller.BorrowingPanelController;
+
 public class BorrowingPanelView extends JPanel {
 	
 	/**
@@ -159,6 +164,10 @@ public class BorrowingPanelView extends JPanel {
 		gbc_btnPrzyjmijZwrot.gridx = 3;
 		gbc_btnPrzyjmijZwrot.gridy = 4;
 		this.add(btnPrzyjmijZwrot, gbc_btnPrzyjmijZwrot);
+		
+		BorrowingPanelModel model = new BorrowingPanelModel(this);
+		BorrowingPanelController controller = new BorrowingPanelController(model, this);
+		controller.control();
 	}
 
 	public String getRights() {
@@ -168,5 +177,60 @@ public class BorrowingPanelView extends JPanel {
 	public void setRights(String rights) {
 		this.rights = rights;
 	}
+	
+	public JButton getReturnBookButton() {
+		return btnPrzyjmijZwrot;
+	}
+	
+	public JButton getBorrowBookButton() {
+		return btnWypozycz;
+	}
 
+	public String getBookIdField() {
+		return bookNumberTextField.getText();
+	}
+	
+	public void setBookIdField(String text) {
+		this.bookNumberTextField.setText(text);
+	}
+	
+	public String getBookTitleField() {
+		return titleTextField.getText();
+	}
+	
+	public void setBookTitleField(String text) {
+		this.titleTextField.setText(text);
+	}
+	
+	public String getAuthorTextField() {
+		return authorTextField.getText();
+	}
+	
+	public void setAuthorTextField(String text) {
+		this.authorTextField.setText(text);
+	}
+	
+	public String getReaderIdTextField() {
+		return readerNumberTextField.getText();
+	}
+	
+	public void setReaderIdTextField(String text) {
+		this.readerNumberTextField.setText(text);
+	}
+	
+	public String getReaderNameTextField() {
+		return nameTextField.getText();
+	}
+	
+	public void setReaderNameTextField(String text) {
+		this.nameTextField.setText(text);
+	}
+	
+	public String getReaderSurnameTextField() {
+		return surnameTextField.getText();
+	}
+	
+	public void setReaderSurnameTextField(String text) {
+		this.surnameTextField.setText(text);
+	}
 }

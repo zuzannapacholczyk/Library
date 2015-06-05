@@ -22,6 +22,9 @@ public class Reader {
 		this.setEmail(email);
 	}
 
+	public Reader() {
+	}
+
 	public int getId() {
 		return id;
 	}

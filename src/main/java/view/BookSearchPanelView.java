@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -77,13 +78,15 @@ public class BookSearchPanelView extends JPanel{
 		this.add(searchButton, gbc_btnWypozycz);
 
 		searchBookResultTable = new JTable();
+		JScrollPane scrollPane = new JScrollPane(searchBookResultTable);
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.gridwidth = 2;
 		gbc_table.insets = new Insets(0, 0, 0, 5);
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 4;
-		this.add(searchBookResultTable, gbc_table);
+		
+		this.add(scrollPane, gbc_table);
 		BookSearchPanelModel model = new BookSearchPanelModel(this);
 		BookSearchPanelController controller = new BookSearchPanelController(model, this);
 		controller.control();
@@ -100,6 +103,10 @@ public class BookSearchPanelView extends JPanel{
 	
 	public void setListElements(String[] list) {
 		this.list.setListData(list);
+	}
+	
+	public JTable getResultTable() {
+		return this.searchBookResultTable;
 	}
 	
 	public String getPhrase() {

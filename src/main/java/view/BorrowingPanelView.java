@@ -9,26 +9,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.BookSearchPanelModel;
 import model.BorrowingPanelModel;
-import controller.BookSearchPanelController;
 import controller.BorrowingPanelController;
 
 public class BorrowingPanelView extends JPanel {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6100013237167283019L;
-	private JTextField nameTextField;
+
 	private JTextField bookNumberTextField;
 	private JTextField readerNumberTextField;
-	private JTextField titleTextField;
-	private JTextField surnameTextField;
-	private JTextField authorTextField;
+
 	private JButton btnWypozycz;
 	private JButton btnPrzyjmijZwrot;
-	
+
 	private String rights = "r";
 
 	public BorrowingPanelView(String string) {
@@ -39,7 +35,6 @@ public class BorrowingPanelView extends JPanel {
 		gbl_borrowingPanel.columnWeights = new double[] { 1.0 };
 		gbl_borrowingPanel.rowWeights = new double[] { 1.0 };
 		this.setLayout(gbl_borrowingPanel);
-		
 
 		JLabel lblCzytelnik = new JLabel("CZYTELNIK");
 		GridBagConstraints gbc_lblCzytelnik = new GridBagConstraints();
@@ -61,7 +56,7 @@ public class BorrowingPanelView extends JPanel {
 		gbc_lblNewLabel_2.gridx = 0;
 		gbc_lblNewLabel_2.gridy = 1;
 		this.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
+
 		readerNumberTextField = new JTextField();
 		GridBagConstraints gbc_readerNumberTextField = new GridBagConstraints();
 		gbc_readerNumberTextField.insets = new Insets(0, 0, 5, 5);
@@ -77,7 +72,7 @@ public class BorrowingPanelView extends JPanel {
 		gbc_lblNewLabel_5.gridx = 2;
 		gbc_lblNewLabel_5.gridy = 1;
 		this.add(lblNewLabel_5, gbc_lblNewLabel_5);
-		
+
 		bookNumberTextField = new JTextField();
 		GridBagConstraints gbc_bookNumberTextField = new GridBagConstraints();
 		gbc_bookNumberTextField.insets = new Insets(0, 0, 5, 0);
@@ -86,70 +81,6 @@ public class BorrowingPanelView extends JPanel {
 		gbc_bookNumberTextField.gridy = 1;
 		this.add(bookNumberTextField, gbc_bookNumberTextField);
 		bookNumberTextField.setColumns(10);
-
-		JLabel lblNewLabel_3 = new JLabel("Imie");
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 0;
-		gbc_lblNewLabel_3.gridy = 2;
-		this.add(lblNewLabel_3, gbc_lblNewLabel_3);
-		
-		nameTextField = new JTextField();
-		GridBagConstraints gbc_nameTextField = new GridBagConstraints();
-		gbc_nameTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_nameTextField.fill = GridBagConstraints.BOTH;
-		gbc_nameTextField.gridx = 1;
-		gbc_nameTextField.gridy = 2;
-		this.add(nameTextField, gbc_nameTextField);
-		nameTextField.setColumns(10);
-
-		JLabel lblNewLabel_6 = new JLabel("Tytul");
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.gridx = 2;
-		gbc_lblNewLabel_6.gridy = 2;
-		this.add(lblNewLabel_6, gbc_lblNewLabel_6);
-		
-		titleTextField = new JTextField();
-		GridBagConstraints gbc_titleTextField = new GridBagConstraints();
-		gbc_titleTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_titleTextField.fill = GridBagConstraints.BOTH;
-		gbc_titleTextField.gridx = 3;
-		gbc_titleTextField.gridy = 2;
-		this.add(titleTextField, gbc_titleTextField);
-		titleTextField.setColumns(10);
-
-		JLabel lblNewLabel_4 = new JLabel("Nazwisko");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 0;
-		gbc_lblNewLabel_4.gridy = 3;
-		this.add(lblNewLabel_4, gbc_lblNewLabel_4);
-
-		surnameTextField = new JTextField();
-		GridBagConstraints gbc_surnameTextField = new GridBagConstraints();
-		gbc_surnameTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_surnameTextField.fill = GridBagConstraints.BOTH;
-		gbc_surnameTextField.gridx = 1;
-		gbc_surnameTextField.gridy = 3;
-		this.add(surnameTextField, gbc_surnameTextField);
-		surnameTextField.setColumns(10);
-		
-		JLabel lblNewLabel_7 = new JLabel("Autor");
-		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
-		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_7.gridx = 2;
-		gbc_lblNewLabel_7.gridy = 3;
-		this.add(lblNewLabel_7, gbc_lblNewLabel_7);
-		
-		authorTextField = new JTextField();
-		GridBagConstraints gbc_authorNumberTextField = new GridBagConstraints();
-		gbc_authorNumberTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_authorNumberTextField.fill = GridBagConstraints.BOTH;
-		gbc_authorNumberTextField.gridx = 3;
-		gbc_authorNumberTextField.gridy = 3;
-		this.add(authorTextField, gbc_authorNumberTextField);
-		authorTextField.setColumns(10);
 
 		btnWypozycz = new JButton("Wypozycz");
 		GridBagConstraints gbc_butnWypozycz = new GridBagConstraints();
@@ -164,9 +95,10 @@ public class BorrowingPanelView extends JPanel {
 		gbc_btnPrzyjmijZwrot.gridx = 3;
 		gbc_btnPrzyjmijZwrot.gridy = 4;
 		this.add(btnPrzyjmijZwrot, gbc_btnPrzyjmijZwrot);
-		
+
 		BorrowingPanelModel model = new BorrowingPanelModel(this);
-		BorrowingPanelController controller = new BorrowingPanelController(model, this);
+		BorrowingPanelController controller = new BorrowingPanelController(
+				model, this);
 		controller.control();
 	}
 
@@ -177,11 +109,11 @@ public class BorrowingPanelView extends JPanel {
 	public void setRights(String rights) {
 		this.rights = rights;
 	}
-	
+
 	public JButton getReturnBookButton() {
 		return btnPrzyjmijZwrot;
 	}
-	
+
 	public JButton getBorrowBookButton() {
 		return btnWypozycz;
 	}
@@ -189,48 +121,17 @@ public class BorrowingPanelView extends JPanel {
 	public String getBookIdField() {
 		return bookNumberTextField.getText();
 	}
-	
+
 	public void setBookIdField(String text) {
 		this.bookNumberTextField.setText(text);
 	}
-	
-	public String getBookTitleField() {
-		return titleTextField.getText();
-	}
-	
-	public void setBookTitleField(String text) {
-		this.titleTextField.setText(text);
-	}
-	
-	public String getAuthorTextField() {
-		return authorTextField.getText();
-	}
-	
-	public void setAuthorTextField(String text) {
-		this.authorTextField.setText(text);
-	}
-	
+
 	public String getReaderIdTextField() {
 		return readerNumberTextField.getText();
 	}
-	
+
 	public void setReaderIdTextField(String text) {
 		this.readerNumberTextField.setText(text);
 	}
-	
-	public String getReaderNameTextField() {
-		return nameTextField.getText();
-	}
-	
-	public void setReaderNameTextField(String text) {
-		this.nameTextField.setText(text);
-	}
-	
-	public String getReaderSurnameTextField() {
-		return surnameTextField.getText();
-	}
-	
-	public void setReaderSurnameTextField(String text) {
-		this.surnameTextField.setText(text);
-	}
+
 }

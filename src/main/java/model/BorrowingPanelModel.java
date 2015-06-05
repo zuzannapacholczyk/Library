@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import database.BorrowingOperations;
 import database.SearchBookOperations;
 import database.SearchReaderOperations;
@@ -25,7 +23,8 @@ public class BorrowingPanelModel {
 		SearchBookOperations searchBook = new SearchBookOperations();
 		book = findBookById(book, searchBook);
 		if (view.getReaderIdTextField().length() == 0) {
-			reader = findReaderByNameAndSurname(searchReader);
+			ErrorDialog error = new ErrorDialog();
+			error.showError("Musisz podac dane czytelnika");
 		} else {
 			reader = findReaderById(book, searchReader);
 		}
@@ -41,42 +40,6 @@ public class BorrowingPanelModel {
 		}
 
 	}
-
-	private Reader findReaderByNameAndSurname(SearchReaderOperations searchReader) {
-		Reader reader;
-		List<Reader> resultList;
-		String name = view.getReaderNameTextField();
-		String surname = view.getReaderSurnameTextField();
-		if (name.length() == 0 && surname.length() == 0) {
-			ErrorDialog error = new ErrorDialog();
-			error.showError("Musisz podac dane czytelnika");
-		} else if (name.length() > 0 && surname.length() > 0) {
-			resultList = searchReader.findReaderByNameAndSurname(name,
-					surname, view.getRights());
-			if (resultList.size() > 1 || resultList.size() == 0) {
-				ErrorDialog error = new ErrorDialog();
-				error.showError("Niejednoznaczne dane czytelnika");
-			} else {
-				reader = resultList.get(0);
-				return reader;
-			}
-		} else if (surname.length() > 0) {
-			resultList = searchReader.findReaderBySurname(surname,
-					view.getRights());
-			if (resultList.size() > 1 || resultList.size() == 0) {
-				ErrorDialog error = new ErrorDialog();
-				error.showError("Niejednoznaczne dane czytelnika");
-			} else {
-				reader = resultList.get(0);
-				return reader;
-			}
-		} else {
-			ErrorDialog error = new ErrorDialog();
-			error.showError("Niejednoznaczne dane czytelnika");
-		}
-		return null;
-	}
-
 	private BookCopy findBookById(BookCopy book, SearchBookOperations searchBook) {
 		int bookId;
 		if (view.getBookIdField().length() == 0) {
@@ -109,8 +72,31 @@ public class BorrowingPanelModel {
 	}
 
 	public void returnBook() {
-		// TODO Auto-generated method stub
-
+		int bookId = 0;
+		int readerId = 0;
+		if (view.getBookIdField().length() == 0) {
+			ErrorDialog error = new ErrorDialog();
+			error.showError("Musisz podac numer ksiazki");
+		} else {
+			bookId = Integer.parseInt(view.getBookIdField());
+		}
+		
+		if (view.getReaderIdTextField().length() == 0) {
+			ErrorDialog error = new ErrorDialog();
+			error.showError("Musisz podac dane czytelnika");
+		} else {
+			readerId = Integer.parseInt(view.getReaderIdTextField());
+		}
+	
+		BorrowingOperations borrowingOperations = new BorrowingOperations();
+		if(borrowingOperations.returnBook(bookId, readerId, view.getRights())) {
+			ErrorDialog error = new ErrorDialog();
+			error.showSuccess("Przyjeto pomyslnie");
+		}
+		else {
+			ErrorDialog error = new ErrorDialog();
+			error.showError("Blad zwrotu");
+		}
 	}
 
 }

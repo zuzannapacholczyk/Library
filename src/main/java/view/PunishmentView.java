@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,8 +7,12 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import model.PunishmentPanelModel;
+import controller.PunishmentPanelController;
 
 public class PunishmentView extends JPanel{
 	/**
@@ -18,7 +21,7 @@ public class PunishmentView extends JPanel{
 	private static final long serialVersionUID = 5381523845873691737L;
 	private JTextField surnamePunishTextField;
 	private JButton btnZnajdzKary;
-	private Component searchPunishmentResultTable;
+	private JTable searchPunishmentResultTable;
 	private JButton btnOplacWszystkie;
 	private JTextField namePunishTextField;
 	private JTextField readerNumberPunishTextField;
@@ -89,19 +92,24 @@ public class PunishmentView extends JPanel{
 		this.add(btnZnajdzKary, gbc_btnZnajdzKary);
 		
 		searchPunishmentResultTable = new JTable();
+		JScrollPane scrollPane = new JScrollPane(searchPunishmentResultTable);
 		GridBagConstraints gbc_tablePunishment = new GridBagConstraints();
 		gbc_tablePunishment.gridwidth = 2;
 		gbc_tablePunishment.insets = new Insets(0, 0, 0, 5);
 		gbc_tablePunishment.fill = GridBagConstraints.BOTH;
 		gbc_tablePunishment.gridx = 0;
 		gbc_tablePunishment.gridy = 4;
-		this.add(searchPunishmentResultTable, gbc_tablePunishment);
+		this.add(scrollPane, gbc_tablePunishment);
 		
 		btnOplacWszystkie = new JButton("Oplac wszystkie");
 		GridBagConstraints gbc_btnOplacWszystkie = new GridBagConstraints();
 		gbc_btnOplacWszystkie.gridx = 1;
 		gbc_btnOplacWszystkie.gridy = 5;
 		this.add(btnOplacWszystkie, gbc_btnOplacWszystkie);
+		
+		PunishmentPanelModel model = new PunishmentPanelModel(this);
+		PunishmentPanelController controller = new PunishmentPanelController(model, this);
+		controller.control();
 	}
 
 	public String getRights() {
@@ -110,6 +118,30 @@ public class PunishmentView extends JPanel{
 
 	public void setRights(String rights) {
 		this.rights = rights;
+	}
+	
+	public JButton getButtonPayForAll() {
+		return btnOplacWszystkie;
+	}
+	
+	public JTable getResultTable() {
+		return searchPunishmentResultTable;
+	}
+	
+	public String getSurnameTextField() {
+		return surnamePunishTextField.getText();
+	}
+	
+	public String getNameTextField() {
+		return namePunishTextField.getText();
+	}
+	
+	public String getIdTextField() {
+		return readerNumberPunishTextField.getText();
+	}
+	
+	public JButton getButtonFindPunishment() {
+		return btnZnajdzKary;
 	}
 
 }

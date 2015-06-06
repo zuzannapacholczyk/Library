@@ -1,0 +1,342 @@
+-- Zuzanna Pacholczyk
+-- 258370
+-- Model fizyczny do projektu Biblioteka
+
+-- utworzenie bazy danych
+-- 		CREATE DATABASE biblioteka;
+
+-- łączenie z bazą: 
+-- 		psql biblioteka
+
+-- tables
+
+DROP TABLE IF EXISTS Users CASCADE;
+CREATE TABLE Users (
+	login VARCHAR(25) PRIMARY KEY CHECK (LENGTH(login) >= 4),
+	password VARCHAR(35) NOT NULL CHECK (LENGTH(password) >= 6),
+	name VARCHAR(20),
+	surname VARCHAR(30),
+	rights VARCHAR(1) NOT NULL CHECK (rights IN ('a', 'l', 'r'))
+);
+
+DROP TABLE IF EXISTS Readers CASCADE;
+CREATE TABLE Readers (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	surname VARCHAR(30) NOT NULL,
+	address TEXT NOT NULL,
+	email TEXT
+);
+
+DROP TABLE IF EXISTS Departments CASCADE;
+CREATE TABLE Departments (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(30) NOT NULL
+);
+
+DROP TABLE IF EXISTS Authors CASCADE;
+CREATE TABLE Authors (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(20),
+	surname VARCHAR(30) NOT NULL
+);
+
+DROP TABLE IF EXISTS Books CASCADE;
+CREATE TABLE Books (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(50) NOT NULL
+);
+
+DROP TABLE IF EXISTS Authors_Books CASCADE;
+CREATE TABLE Authors_Books (
+	author_id INTEGER NOT NULL REFERENCES Authors ON DELETE RESTRICT,
+	book_id INTEGER NOT NULL REFERENCES Books ON DELETE RESTRICT
+);
+
+DROP TABLE IF EXISTS Book_Copies CASCADE;
+CREATE TABLE Book_Copies (
+	id SERIAL PRIMARY KEY,
+	book_id INTEGER NOT NULL REFERENCES Books ON DELETE RESTRICT,
+	issue_number VARCHAR(4),
+	department_id INTEGER REFERENCES Departments ON DELETE SET NULL,
+	publisher TEXT
+);
+
+DROP TABLE IF EXISTS Borrowings CASCADE;
+CREATE TABLE Borrowings (
+	id SERIAL PRIMARY KEY,
+	copy_id INTEGER NOT NULL REFERENCES Book_Copies ON DELETE CASCADE,
+	reader_id INTEGER NOT NULL REFERENCES Readers ON DELETE CASCADE,
+	beginning_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
+	end_date TIMESTAMP WITH TIME ZONE DEFAULT NULL CHECK (end_date > beginning_date)
+);
+
+DROP TABLE IF EXISTS Punishments CASCADE;
+CREATE TABLE Punishments (
+	borrowing_id INTEGER NOT NULL REFERENCES Borrowings ON DELETE CASCADE,
+	amount REAL NOT NULL CHECK (amount >= 0),
+	beginning_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
+	end_date TIMESTAMP WITH TIME ZONE DEFAULT NULL CHECK (end_date > beginning_date)
+);
+
+-- views
+
+CREATE OR REPLACE VIEW Readers_Found AS
+(
+	SELECT id, name, surname FROM Readers
+);
+
+CREATE OR REPLACE VIEW Books_Found AS
+(
+	WITH if_available AS
+	(
+		SELECT copy_id FROM Borrowings WHERE end_date IS NULL AND beginning_date IS NOT NULL
+	)
+	SELECT Book_Copies.id AS id, title, name, surname, issue_number, department_id, publisher,   
+	(CASE WHEN if_available IS NULL THEN 'true' ELSE 'false' END) AS availability
+	FROM Books
+	JOIN Book_Copies ON (Book_Copies.book_id = Books.id)
+	JOIN Authors_Books ON (Books.id = Authors_Books.book_id)
+	JOIN Authors ON (Authors_Books.author_id = Authors.id)
+	LEFT JOIN if_available ON (Book_Copies.id = if_available.copy_id)
+);
+
+CREATE OR REPLACE VIEW Punishments_Found AS
+(
+	SELECT Borrowings.reader_id as id, borrowing_id, title, name, surname, amount, to_char(Borrowings.beginning_date, 'YYYY-MM-DD') AS when_borrowed, to_char(Punishments.beginning_date, 'YYYY-MM-DD') AS when_punished
+	FROM Punishments
+	JOIN Borrowings ON (Punishments.borrowing_id = Borrowings.id)
+	JOIN Book_Copies ON (Borrowings.copy_id = Book_Copies.id)
+	JOIN Books ON (Book_Copies.book_id = Books.id)
+		JOIN Authors_Books ON (Books.id = Authors_Books.book_id)
+	JOIN Authors ON (Authors_Books.author_id = Authors.id)
+	WHERE Punishments.end_date IS NULL
+);
+
+-- functions
+
+CREATE OR REPLACE FUNCTION add_into_punishments() RETURNS VOID AS
+$X$
+	INSERT INTO Punishments(borrowing_id, amount) 
+	SELECT id, 0.15 
+	FROM Borrowings 
+	WHERE end_date IS NULL AND current_timestamp::date - beginning_date::date = 30;
+$X$
+LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION update_punishments() RETURNS VOID AS
+$X$
+	UPDATE Punishments SET amount = amount + 0.15 WHERE end_date IS NULL;
+$X$
+LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION prevent_from_wrong_deletion() RETURNS TRIGGER AS
+$X$
+	BEGIN 
+		IF (TG_ARGV[0] == 'Book_Copies')
+			THEN IF EXISTS (SELECT end_date FROM Borrowings JOIN Book_Copies ON (Borrowings.copy_id = Book_Copies.id) WHERE Borrowings.copy_id = OLD.copy_id) THEN RETURN OLD;
+			ELSE RETURN NULL;
+			END IF;
+		END IF;
+
+		IF (TG_ARGV[0] == 'Readers')
+			THEN IF EXISTS (SELECT end_date FROM Borrowings JOIN Readers ON (Borrowings.reader_id = Readers.id) WHERE Borrowings.copy_id = OLD.copy_id) THEN RETURN OLD;
+			ELSE RETURN NULL;
+			END IF;
+		END IF;
+
+		IF (TG_ARGV[0] == 'Borrowings')
+			THEN IF EXISTS (SELECT Punishments.end_date FROM Borrowings JOIN Punishments ON (Borrowings.id = Punishments.borrowing_id) WHERE Borrowings.id = OLD.id) THEN RETURN OLD;
+			ELSE RETURN NULL;
+			END IF;
+		END IF;
+
+		IF (TG_ARGV[0] == 'Borrowings')
+			THEN 
+				IF EXISTS (SELECT end_date FROM Borrowings WHERE Borrowings.id = OLD.id) THEN RETURN OLD;
+			ELSE RETURN NULL;	
+				END IF;
+		END IF;
+
+		IF (TG_ARGV[0] == 'Punishments')
+			THEN IF EXISTS(SELECT end_date FROM Punishments WHERE Punishments.id = OLD.id) THEN RETURN OLD;
+			ELSE RETURN NULL;
+			
+			END IF;
+		END IF;
+
+	END
+$X$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_if_book_available() RETURNS TRIGGER AS
+$X$
+	BEGIN
+		IF EXISTS (SELECT copy_id FROM Borrowings WHERE copy_id = NEW.copy_id) THEN  RAISE EXCEPTION 'Book is borrowed by someone'; 
+		END IF;
+		
+		RETURN NEW;
+	END
+$X$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_if_no_punishment() RETURNS TRIGGER AS
+$X$
+	BEGIN
+		IF EXISTS (SELECT borrowing_id
+		FROM Punishments 
+		JOIN Borrowings ON (Punishments.borrowing_id = Borrowings.id)
+		WHERE Borrowings.reader_id = NEW.reader_id)
+			THEN RETURN NULL; 
+		END IF;
+		
+		RETURN NEW;
+	END
+$X$
+LANGUAGE plpgsql;
+
+-- triggers
+
+CREATE TRIGGER check_if_can_borrow_availability BEFORE INSERT ON Borrowings
+FOR EACH ROW
+EXECUTE PROCEDURE check_if_book_available();
+
+CREATE TRIGGER check_if_can_borrow_punishments BEFORE INSERT ON Borrowings
+FOR EACH ROW
+EXECUTE PROCEDURE check_if_no_punishment();
+
+CREATE TRIGGER check_if_can_delete BEFORE DELETE ON Readers
+FOR EACH ROW
+EXECUTE PROCEDURE prevent_from_wrong_deletion('Readers');
+
+CREATE TRIGGER check_if_can_delete BEFORE DELETE ON Book_Copies
+FOR EACH ROW
+EXECUTE PROCEDURE prevent_from_wrong_deletion('Book_Copies');
+
+CREATE TRIGGER check_if_can_delete BEFORE DELETE ON Borrowings
+FOR EACH ROW
+EXECUTE PROCEDURE prevent_from_wrong_deletion('Borrowings');
+
+CREATE TRIGGER check_if_can_delete BEFORE DELETE ON Punishments
+FOR EACH ROW
+EXECUTE PROCEDURE prevent_from_wrong_deletion('Punishments');
+
+-- roles
+
+DROP ROLE IF EXISTS READER;
+CREATE ROLE READER LOGIN ENCRYPTED PASSWORD 'reader';
+
+DROP ROLE IF EXISTS LIBRARIAN;
+CREATE ROLE LIBRARIAN LOGIN ENCRYPTED PASSWORD 'librarian';
+
+DROP ROLE IF EXISTS ADMINISTRATOR;
+CREATE ROLE ADMINISTRATOR LOGIN ENCRYPTED PASSWORD 'administrator';
+
+-- rights
+
+REVOKE ALL ON Users FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Readers FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Departments FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Authors FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Books FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Authors_Books FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Book_Copies FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Borrowings FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+REVOKE ALL ON Punishments FROM PUBLIC, READER, LIBRARIAN, ADMINISTRATOR CASCADE;
+
+GRANT SELECT ON Books_Found TO READER;
+GRANT ALL PRIVILEGES ON Readers, Departments, Authors, Books, Authors_Books, Book_Copies, Borrowings, Punishments, Books_Found, Punishments_Found, Readers_Found, authors_id_seq, books_id_seq, book_copies_id_seq, borrowings_id_seq, departments_id_seq, readers_id_seq TO LIBRARIAN;
+GRANT ALL PRIVILEGES ON Users, Readers, Departments, Authors, Books, Authors_Books, Book_Copies, Borrowings, Punishments, Books_Found, Punishments_Found, Readers_Found, authors_id_seq, books_id_seq, book_copies_id_seq, borrowings_id_seq, departments_id_seq, readers_id_seq TO ADMINISTRATOR;
+
+-- data
+
+COPY Authors (name, surname) FROM stdin;
+Adam	Asnyk
+NULL	Homer
+Boleslaw	Prus
+Maria	Rodziewiczowna
+Maria	Konopnicka
+Maria	Dabrowska
+Anton	Czechow
+Dante	Alighieri
+NULL	Moliere
+Adam	Mickiewicz
+Mark	Twain
+Antonina	Domanska
+\.
+
+INSERT INTO Books(title) VALUES
+('Jednego serca'),
+('Liryki najpiekniejsze'),
+('Iliada'),
+('Odyseja'),
+('Kamizelka'),
+('Lalka'),
+('Zlota dola'),
+('Chlopi');
+
+INSERT INTO Authors_Books(author_id, book_id) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(3, 6),
+(4, 7),
+(5, 8);
+
+
+INSERT INTO Departments(name) VALUES
+('Poezja polska'),
+('Powiesc polska'),
+('Opowiadanie polskie'),
+('Powiesc zagraniczna'),
+('Poezja zagraniczna'),
+('Opowiadanie zagraniczne'),
+('Dramat polski'),
+('Dramat zagraniczny'),
+('Lektura szkolna');
+
+INSERT INTO Book_Copies( book_id, issue_number, department_id, publisher) VALUES
+(1, '1996', 1, 'Warszawa Sternik'),
+(2, '2004', 1, 'Torun Algo'),
+(2, '2004', 1, 'Torun Algo'),
+(2, '1999', 1, 'Torun Algo'),
+(3, '2009', 5, 'Krakow Greg'),
+(3, '2009', 5, 'Krakow Greg'),
+(3, '2009', 9, 'Krakow Greg'),
+(3, '2009', 9, 'Krakow Greg'),
+(4, '2010', 5, 'Krakow Greg'),
+(4, '2010', 9, 'Krakow Greg'),
+(5, '2014', 9, 'Krakow Greg'),
+(5, '2014', 9, 'Krakow Greg'),
+(6, '2015', 9, 'Krakow Greg'),
+(6, '2010', 2, 'Krakow Greg'),
+(6, '2010', 2, 'Torun Algo'),
+(7, '2013', 3, 'Warszawa MG'),
+(7, '2010', 3, 'Torun Algo'),
+(8, '2009', 2, 'Krakow Zielona Sowa'),
+(8, '2009', 2, 'Krakow Zielona Sowa'),
+(8, '2009', 2, 'Krakow Zielona Sowa'),
+(8, '2009', 2, 'Krakow Zielona Sowa'),
+(8, '2011', 9, 'Krakow Greg'),
+(8, '2011', 9, 'Krakow Greg'),
+(8, '2011', 9, 'Krakow Greg');
+
+INSERT INTO Users(login, password, name, surname, rights) VALUES 
+('admin', 'admin1234', 'Jan', 'Nowak', 'a'),
+('librarian', 'librarian1234', 'Anna', 'Nowak', 'l'),
+('reader', 'reader1234', NULL, NULL, 'r');
+
+INSERT INTO Readers(name, surname, address, email) VALUES 
+('Amelia', 'Michalska', 'Wroclaw, ul. Pocztowa 8', 'amelia@amelia.pl'),
+('Kamil', 'Borowiak', 'Wroclaw', NULL),
+('Franciszek', 'Michalak', 'Wroclaw', 'franekCiasteczko@buziaczek.pl');
+
+INSERT INTO Borrowings(copy_id, reader_id) VALUES
+(2, 1),
+(3, 1),
+(4,2);
+
+INSERT INTO Punishments(borrowing_id, amount) VALUES (1, 0.15);
+

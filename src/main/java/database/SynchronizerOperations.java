@@ -38,4 +38,29 @@ public class SynchronizerOperations {
 			}
 		}
 	}
+	
+	public void insertPunishments() {
+		try {
+			Database db = new Database();
+			con = db.startLibrarianConnection();
+			proc = con.prepareCall("{ call add_into_punishments() }");
+			proc.execute();
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Database.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+		} finally {
+			try {
+				if (proc != null) {
+					proc.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Database.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+	}
 }

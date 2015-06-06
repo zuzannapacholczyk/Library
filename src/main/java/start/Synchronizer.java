@@ -27,6 +27,7 @@ public class Synchronizer {
 			String result = br.readLine();
 			if (!result.equals(getTodayDate())) {
 				synchronizerOperations.countPunishments();
+				synchronizerOperations.insertPunishments();
 				writeDateToFile();
 			}
 		} catch (IOException e) {

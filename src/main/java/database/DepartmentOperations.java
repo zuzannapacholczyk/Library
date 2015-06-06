@@ -146,7 +146,7 @@ public class DepartmentOperations {
 			}
 		}
 	}
-	
+
 	public int findDepartmentIdByName(String name, String rights) {
 		try {
 			createAppropriateConnection(rights);

@@ -31,7 +31,7 @@ public class PunishmentView extends JPanel{
 	public PunishmentView(String string) {
 		this.setRights(string);
 		GridBagLayout gbl_punishmentPanel = new GridBagLayout();
-		gbl_punishmentPanel.columnWidths = new int[] { 350, 350 };
+		gbl_punishmentPanel.columnWidths = new int[] { 350, 200, 150 };
 		gbl_punishmentPanel.rowHeights = new int[] { 30, 30, 30, 30, 250, 30 };
 		gbl_punishmentPanel.columnWeights = new double[] { Double.MIN_VALUE };
 		gbl_punishmentPanel.rowWeights = new double[] { Double.MIN_VALUE };
@@ -46,7 +46,8 @@ public class PunishmentView extends JPanel{
 
 		readerNumberPunishTextField = new JTextField();
 		GridBagConstraints gbc_readerNumberPunishTextField = new GridBagConstraints();
-		gbc_readerNumberPunishTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_readerNumberPunishTextField.gridwidth = 2;
+		gbc_readerNumberPunishTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_readerNumberPunishTextField.fill = GridBagConstraints.BOTH;
 		gbc_readerNumberPunishTextField.gridx = 1;
 		gbc_readerNumberPunishTextField.gridy = 0;
@@ -62,7 +63,8 @@ public class PunishmentView extends JPanel{
 		
 		namePunishTextField = new JTextField();
 		GridBagConstraints gbc_namePunishTextField = new GridBagConstraints();
-		gbc_namePunishTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_namePunishTextField.gridwidth = 2;
+		gbc_namePunishTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_namePunishTextField.fill = GridBagConstraints.BOTH;
 		gbc_namePunishTextField.gridx = 1;
 		gbc_namePunishTextField.gridy = 1;
@@ -78,7 +80,8 @@ public class PunishmentView extends JPanel{
 		
 		surnamePunishTextField = new JTextField();
 		GridBagConstraints gbc_surnamePunishTextField = new GridBagConstraints();
-		gbc_surnamePunishTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_surnamePunishTextField.gridwidth = 2;
+		gbc_surnamePunishTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_surnamePunishTextField.fill = GridBagConstraints.BOTH;
 		gbc_surnamePunishTextField.gridx = 1;
 		gbc_surnamePunishTextField.gridy = 2;
@@ -87,16 +90,23 @@ public class PunishmentView extends JPanel{
 		
 		btnZnajdzKary = new JButton("Znajdz kary");
 		GridBagConstraints gbc_btnZnajdzKary = new GridBagConstraints();
-		gbc_btnZnajdzKary.insets = new Insets(0, 0, 5, 0);
+		gbc_btnZnajdzKary.insets = new Insets(0, 0, 5, 5);
 		gbc_btnZnajdzKary.gridx = 1;
 		gbc_btnZnajdzKary.gridy = 3;
 		this.add(btnZnajdzKary, gbc_btnZnajdzKary);
 		
+		btnClean = new JButton("Wyczysc");
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.insets = new Insets(0, 0, 5, 0);
+		gbc_button.gridx = 2;
+		gbc_button.gridy = 3;
+		add(btnClean, gbc_button);
+		
 		searchPunishmentResultTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(searchPunishmentResultTable);
 		GridBagConstraints gbc_tablePunishment = new GridBagConstraints();
-		gbc_tablePunishment.gridwidth = 2;
-		gbc_tablePunishment.insets = new Insets(0, 0, 0, 5);
+		gbc_tablePunishment.insets = new Insets(0, 0, 5, 0);
+		gbc_tablePunishment.gridwidth = 3;
 		gbc_tablePunishment.fill = GridBagConstraints.BOTH;
 		gbc_tablePunishment.gridx = 0;
 		gbc_tablePunishment.gridy = 4;
@@ -104,15 +114,12 @@ public class PunishmentView extends JPanel{
 		
 		btnOplacWszystkie = new JButton("Oplac wszystkie");
 		GridBagConstraints gbc_btnOplacWszystkie = new GridBagConstraints();
+		gbc_btnOplacWszystkie.insets = new Insets(0, 0, 0, 5);
 		gbc_btnOplacWszystkie.gridx = 1;
 		gbc_btnOplacWszystkie.gridy = 5;
 		this.add(btnOplacWszystkie, gbc_btnOplacWszystkie);
-		
-		btnClean = new JButton("Wyczysc");
-		GridBagConstraints gbc_btnClean = new GridBagConstraints();
 		gbc_btnOplacWszystkie.gridx = 0;
 		gbc_btnOplacWszystkie.gridy = 5;
-		this.add(btnClean, gbc_btnClean);
 		
 		PunishmentPanelModel model = new PunishmentPanelModel(this);
 		PunishmentPanelController controller = new PunishmentPanelController(model, this);

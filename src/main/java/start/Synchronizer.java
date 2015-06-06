@@ -9,14 +9,7 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-
-import javax.mail.*;
-import javax.mail.internet.*;
 import database.SynchronizerOperations;
-import entities.ReaderToInform;
 
 public class Synchronizer {
 

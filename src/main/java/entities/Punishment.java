@@ -7,8 +7,9 @@ public class Punishment {
 	private float amount;
 	private Date beginningDate;
 	private Date endDate;
-	
-	public Punishment(int borrowingId, float amount, Date beginningDate, Date endDate) {
+
+	public Punishment(int borrowingId, float amount, Date beginningDate,
+			Date endDate) {
 		this.setBorrowingId(borrowingId);
 		this.setAmount(amount);
 		this.setBeginningDate(beginningDate);

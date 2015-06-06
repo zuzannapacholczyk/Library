@@ -10,20 +10,20 @@ public class LoggingWindowController {
 	private LoggingWindowModel model;
 	public LoggingWindowView view;
 	private ActionListener actionListener;
-	
-	public LoggingWindowController(LoggingWindowModel model, LoggingWindowView view) {
+
+	public LoggingWindowController(LoggingWindowModel model,
+			LoggingWindowView view) {
 		this.model = model;
 		this.view = view;
 	}
-	
-    public void contolButton(){        
-        actionListener = new ActionListener() {
+
+	public void contolButton() {
+		actionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				model.loginUser();
-				
 			}
-        };                
-        view.getBtnZaloguj().addActionListener(actionListener);   
-    }
+		};
+		view.getBtnZaloguj().addActionListener(actionListener);
+	}
 }

@@ -51,8 +51,8 @@ public class BooksPanelView extends JPanel {
 		
 		bookIdBooksTextField = new JTextField();
 		GridBagConstraints gbc_bookIdBooksTextField = new GridBagConstraints();
-		gbc_bookIdBooksTextField.gridwidth = 4;
-		gbc_bookIdBooksTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_bookIdBooksTextField.gridwidth = 5;
+		gbc_bookIdBooksTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_bookIdBooksTextField.fill = GridBagConstraints.BOTH;
 		gbc_bookIdBooksTextField.gridx = 1;
 		gbc_bookIdBooksTextField.gridy = 0;
@@ -68,8 +68,8 @@ public class BooksPanelView extends JPanel {
 		
 		copyIdBooksTextField = new JTextField();
 		GridBagConstraints gbc_copyIdBooksTextField = new GridBagConstraints();
-		gbc_copyIdBooksTextField.gridwidth = 4;
-		gbc_copyIdBooksTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_copyIdBooksTextField.gridwidth = 5;
+		gbc_copyIdBooksTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_copyIdBooksTextField.fill = GridBagConstraints.BOTH;
 		gbc_copyIdBooksTextField.gridx = 1;
 		gbc_copyIdBooksTextField.gridy = 1;
@@ -85,8 +85,8 @@ public class BooksPanelView extends JPanel {
 		
 		titleBooksTextField = new JTextField();
 		GridBagConstraints gbc_titleBooksTextField = new GridBagConstraints();
-		gbc_titleBooksTextField.gridwidth = 4;
-		gbc_titleBooksTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_titleBooksTextField.gridwidth = 5;
+		gbc_titleBooksTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_titleBooksTextField.fill = GridBagConstraints.BOTH;
 		gbc_titleBooksTextField.gridx = 1;
 		gbc_titleBooksTextField.gridy = 2;
@@ -102,8 +102,8 @@ public class BooksPanelView extends JPanel {
 		
 		yearBooksTextField = new JTextField();
 		GridBagConstraints gbc_yearBooksTextField = new GridBagConstraints();
-		gbc_yearBooksTextField.gridwidth = 4;
-		gbc_yearBooksTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_yearBooksTextField.gridwidth = 5;
+		gbc_yearBooksTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_yearBooksTextField.fill = GridBagConstraints.BOTH;
 		gbc_yearBooksTextField.gridx = 1;
 		gbc_yearBooksTextField.gridy = 3;
@@ -119,8 +119,8 @@ public class BooksPanelView extends JPanel {
 		
 		issuerBooksTextField = new JTextField();
 		GridBagConstraints gbc_issuerBooksTextField = new GridBagConstraints();
-		gbc_issuerBooksTextField.gridwidth = 4;
-		gbc_issuerBooksTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_issuerBooksTextField.gridwidth = 5;
+		gbc_issuerBooksTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_issuerBooksTextField.fill = GridBagConstraints.BOTH;
 		gbc_issuerBooksTextField.gridx = 1;
 		gbc_issuerBooksTextField.gridy = 4;
@@ -136,7 +136,7 @@ public class BooksPanelView extends JPanel {
 		
 		listDepartments = new JComboBox<String>();
 		GridBagConstraints gbc_listDepartments = new GridBagConstraints();
-		gbc_listDepartments.insets = new Insets(0, 0, 5, 0);
+		gbc_listDepartments.insets = new Insets(0, 0, 5, 5);
 		gbc_listDepartments.fill = GridBagConstraints.BOTH;
 		gbc_listDepartments.gridx = 1;
 		gbc_listDepartments.gridy = 5;
@@ -165,17 +165,20 @@ public class BooksPanelView extends JPanel {
 		
 		btnUsun_1 = new JButton("Usun");
 		GridBagConstraints gbc_btnUsun_1 = new GridBagConstraints();
-		gbc_btnUsun_1.insets = new Insets(0, 0, 5, 0);
+		gbc_btnUsun_1.insets = new Insets(0, 0, 5, 5);
 		gbc_btnUsun_1.gridx = 4;
 		gbc_btnUsun_1.gridy = 6;
 		this.add(btnUsun_1, gbc_btnUsun_1);
-		
-		btnWyczysc = new JButton("Wyczysc");
-		GridBagConstraints gbc_btnWyczysc_1 = new GridBagConstraints();
 		gbc_btnDodajAutora_1.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDodajAutora_1.gridx = 5;
 		gbc_btnDodajAutora_1.gridy = 6;
-		this.add(btnWyczysc, gbc_btnWyczysc_1);
+		
+		btnWyczysc = new JButton("Wyczysc");
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.insets = new Insets(0, 0, 5, 5);
+		gbc_button.gridx = 5;
+		gbc_button.gridy = 6;
+		add(btnWyczysc, gbc_button);
 		
 		authorBookResultTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(authorBookResultTable);

@@ -13,6 +13,10 @@ public class Department {
 		this.setName(name);
 	}
 
+	public Department() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}

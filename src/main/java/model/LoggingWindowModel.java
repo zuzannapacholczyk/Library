@@ -15,18 +15,6 @@ public class LoggingWindowModel {
 		this.view = view;
 	}
 
-	public String checkIfLoginAndPasswordAreCorrect(String login,
-			String password) {
-		loggingOperations = new LoggingOperations();
-		User user = null;
-		if (login != null && password != null)
-			user = loggingOperations.getUserByLoginAndPassword(login, password);
-		if (user != null) {
-			return user.getRights();
-		}
-		return null;
-	}
-
 	public void loginUser() {
 		String login = this.view.getLoginTextField_1();
 		String password = new String(this.view.getPasswordTextField_1());

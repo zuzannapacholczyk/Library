@@ -13,6 +13,10 @@ public class Book {
 		this.setTitle(title);
 	}
 
+	public Book() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getTitle() {
 		return title;
 	}

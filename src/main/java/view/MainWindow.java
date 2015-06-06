@@ -61,7 +61,7 @@ public class MainWindow extends JFrame {
 		AuthorsPanelView authorsPanel = new AuthorsPanelView("a");
 		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
 
-		BooksView booksPanel = new BooksView("a");
+		BooksPanelView booksPanel = new BooksPanelView("a");
 		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
 
 		DepartmentPanelView departmentPanel = new DepartmentPanelView("a");
@@ -85,7 +85,7 @@ public class MainWindow extends JFrame {
 		AuthorsPanelView authorsPanel = new AuthorsPanelView("l");
 		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
 
-		BooksView booksPanel = new BooksView("l");
+		BooksPanelView booksPanel = new BooksPanelView("l");
 		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
 
 		DepartmentPanelView departmentPanel = new DepartmentPanelView("l");

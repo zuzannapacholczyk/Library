@@ -8,7 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import model.UserAccountPanelModel;
+import controller.UserAccountPanelController;
 
 public class UserAccountView extends JPanel{
 	/**
@@ -16,7 +20,7 @@ public class UserAccountView extends JPanel{
 	 */
 	private static final long serialVersionUID = 7457095234650451444L;
 	private JTextField loginUserTextField;
-	private JTextField passwordUserTextField;
+	private JPasswordField passwordUserTextField;
 	private JTextField nameUserTextField;
 	private JTextField surnameUserTextField;
 	private JList<String> listRights;
@@ -58,7 +62,7 @@ public class UserAccountView extends JPanel{
 		gbc_lblHaslo.gridy = 2;
 		this.add(lblHaslo, gbc_lblHaslo);
 		
-		passwordUserTextField = new JTextField();
+		passwordUserTextField = new JPasswordField();
 		GridBagConstraints gbc_passwordUserTextField = new GridBagConstraints();
 		gbc_passwordUserTextField.gridwidth = 4;
 		gbc_passwordUserTextField.insets = new Insets(0, 0, 5, 0);
@@ -138,6 +142,10 @@ public class UserAccountView extends JPanel{
 		gbc_btnZmien.gridx = 4;
 		gbc_btnZmien.gridy = 6;
 		this.add(btnZmien, gbc_btnZmien);
+		
+		UserAccountPanelModel model = new UserAccountPanelModel(this);
+		UserAccountPanelController controller = new UserAccountPanelController(model, this);
+		controller.control();
 
 	}
 
@@ -147,5 +155,52 @@ public class UserAccountView extends JPanel{
 
 	public void setRights(String rights) {
 		this.rights = rights;
+	}
+	
+	public JButton getDeleteButton() {
+		return btnUsun_2;
+	}
+	
+	public JButton getChangeButton() {
+		return btnZmien;
+	}
+	
+	public JButton getAddButton() {
+		return btnDodaj_2;
+	}
+	
+	public String getLoginTextField() {
+		return loginUserTextField.getText();
+	}
+	
+	public char[] getPasswordTextField() {
+		return passwordUserTextField.getPassword();
+	}
+	
+	public String getNameTextField() {
+		return nameUserTextField.getText();
+	}
+	
+	public void setNameTextField(String name) {
+		this.nameUserTextField.setText(name);
+	}
+	
+	public String getSurnameTextField() {
+		return surnameUserTextField.getText();
+	}
+	
+	public void setSurnameTextField(String surname) {
+		this.surnameUserTextField.setText(surname);
+	}
+	public JList<String> getListRights() {
+		return listRights;
+	}
+	
+	public String getChosenElement() {
+		return listRights.getSelectedValue();
+	}
+	
+	public void setChosenElement(int index) {
+		this.listRights.setSelectedIndex(index);
 	}
 }

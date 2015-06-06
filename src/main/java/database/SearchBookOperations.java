@@ -206,7 +206,7 @@ public class SearchBookOperations {
 		}
 	}
 
-	public BookCopy findBookById(int bookId, String rights) {
+	public BookCopy findBookCopyById(int bookId, String rights) {
 		try {
 			BookCopy book = new BookCopy();
 			createAppropriateConnection(rights);
@@ -231,6 +231,44 @@ public class SearchBookOperations {
 			Logger lgr = Logger.getLogger(Database.class.getName());
 			lgr.log(Level.SEVERE, ex.getMessage(), ex);
 			return null;
+
+		} finally {
+			try {
+				if (st != null) {
+					st.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Database.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+
+	}
+	
+	public int findBookItemByTitle(String title, String rights) {
+		try {
+			createAppropriateConnection(rights);
+
+			String sql = "SELECT * FROM Books WHERE LOWER(title) LIKE ?";
+			st = con.prepareStatement(sql);
+
+			st.setString(1, title);
+			rs = st.executeQuery();
+			if (rs.next()) {
+
+				return rs.getInt("id");
+			}
+
+			return -1;
+
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Database.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+			return -1;
 
 		} finally {
 			try {

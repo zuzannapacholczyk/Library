@@ -40,6 +40,7 @@ public class BookSearchPanelModel {
 	}
 
 	public void searchForBook() {
+		removeAllFromTable();
 		String phrase = this.view.getPhrase();
 
 		if (phrase.length() > 0) {
@@ -88,6 +89,14 @@ public class BookSearchPanelModel {
 				result.addAll(search.findBookByDepartment(words,
 						view.getRights()));
 		}
+	}
+	
+	private void removeAllFromTable() {
+		DefaultTableModel model = (DefaultTableModel) this.view
+				.getResultTable().getModel();
+		for (int i = 0; i < model.getRowCount(); i++)
+			model.removeRow(i);
+
 	}
 
 }

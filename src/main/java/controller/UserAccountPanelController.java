@@ -13,6 +13,7 @@ public class UserAccountPanelController {
 	private ActionListener addUserAction;
 	private ActionListener removeUserAction;
 	private ActionListener updateUserAction;
+	private ActionListener clearFormularAction;
 
 	public UserAccountPanelController(UserAccountPanelModel model,
 			UserAccountView userAccountView) {
@@ -30,6 +31,16 @@ public class UserAccountPanelController {
 
 		};
 		view.getAddButton().addActionListener(addUserAction);
+		
+		clearFormularAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				model.clearFormular();
+
+			}
+
+		};
+		view.getClearButton().addActionListener(clearFormularAction);
 		
 		removeUserAction = new ActionListener() {
 			@Override

@@ -26,6 +26,7 @@ public class PunishmentView extends JPanel{
 	private JTextField namePunishTextField;
 	private JTextField readerNumberPunishTextField;
 	private String rights = "r";
+	private JButton btnClean;
 
 	public PunishmentView(String string) {
 		this.setRights(string);
@@ -107,6 +108,12 @@ public class PunishmentView extends JPanel{
 		gbc_btnOplacWszystkie.gridy = 5;
 		this.add(btnOplacWszystkie, gbc_btnOplacWszystkie);
 		
+		btnClean = new JButton("Wyczysc");
+		GridBagConstraints gbc_btnClean = new GridBagConstraints();
+		gbc_btnOplacWszystkie.gridx = 0;
+		gbc_btnOplacWszystkie.gridy = 5;
+		this.add(btnClean, gbc_btnClean);
+		
 		PunishmentPanelModel model = new PunishmentPanelModel(this);
 		PunishmentPanelController controller = new PunishmentPanelController(model, this);
 		controller.control();
@@ -132,16 +139,32 @@ public class PunishmentView extends JPanel{
 		return surnamePunishTextField.getText();
 	}
 	
+	public void setSurnameTextField(String text) {
+		this.surnamePunishTextField.setText(text);
+	}
+	
 	public String getNameTextField() {
 		return namePunishTextField.getText();
+	}
+	
+	public void setNameTextField(String text) {
+		this.namePunishTextField.setText(text);
 	}
 	
 	public String getIdTextField() {
 		return readerNumberPunishTextField.getText();
 	}
 	
+	public void setIdTextField(String text) {
+		this.readerNumberPunishTextField.setText(text);
+	}
+	
 	public JButton getButtonFindPunishment() {
 		return btnZnajdzKary;
+	}
+	
+	public JButton getButtonClean() {
+		return btnClean;
 	}
 
 }

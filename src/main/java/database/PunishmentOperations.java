@@ -33,7 +33,7 @@ public class PunishmentOperations {
 				punishment.setBorrowingId(rs.getInt("borrowing_id"));
 				punishment.setName(rs.getString("name"));
 				punishment.setSurname(rs.getString("surname"));
-				punishment.setTitle(rs.getString("setTitle"));
+				punishment.setTitle(rs.getString("title"));
 				punishment.setAmount(rs.getFloat("amount"));
 				punishment.setBorrowingDate(rs.getString("when_borrowed"));
 				punishment.setPunishmentDate(rs.getString("when_punished"));
@@ -69,7 +69,7 @@ public class PunishmentOperations {
 			String sql = "UPDATE Punishments SET end_date = current_timestamp WHERE borrowing_id = ?";
 			st = con.prepareStatement(sql);
 			for (int id : borrowingsIds) {
-				st.setInt(2, id);
+				st.setInt(1, id);
 				st.executeUpdate();
 			}
 			return true;

@@ -11,8 +11,9 @@ public class BooksPanelController {
 	private BooksPanelModel model;
 	private BooksPanelView view;
 	private ActionListener addBookActionListener;
-	private ActionListener addAuthorActionListener;
 	private ActionListener removeBookActionListener;
+	private ActionListener addCopyActionListener;
+	private ActionListener cleanActionListener;
 
 	public BooksPanelController(BooksPanelModel model,
 			BooksPanelView booksPanelView) {
@@ -29,6 +30,25 @@ public class BooksPanelController {
 
 		};
 		view.getAddButton().addActionListener(addBookActionListener);
+		
+		cleanActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				model.clean();
+			}
+
+		};
+		view.getCleanButton().addActionListener(cleanActionListener);
+		
+		addCopyActionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				model.addCopy();
+			}
+
+		};
+		view.getAddCopyButton().addActionListener(addCopyActionListener);
+
 
 		removeBookActionListener = new ActionListener() {
 			@Override
@@ -38,16 +58,6 @@ public class BooksPanelController {
 
 		};
 		view.getRemoveButton().addActionListener(removeBookActionListener);
-
-		addAuthorActionListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				model.addAuthor();
-			}
-
-		};
-		view.getAddAuthorButton().addActionListener(addAuthorActionListener);
-
 	}
 
 }

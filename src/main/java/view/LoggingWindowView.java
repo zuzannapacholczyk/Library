@@ -14,6 +14,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import model.LoggingWindowModel;
+import controller.LoggingWindowController;
+
 public class LoggingWindowView extends JFrame{
 	/**
 	 * 
@@ -88,6 +91,11 @@ public class LoggingWindowView extends JFrame{
 		gbc_errorLabel.gridx = 0;
 		gbc_errorLabel.gridy = 5;
 		getContentPane().add(errorLabel, gbc_errorLabel);
+		
+		this.setVisible(true);
+		LoggingWindowModel loggingWindowModel = new LoggingWindowModel(this);
+		LoggingWindowController loggingWindowController = new LoggingWindowController(loggingWindowModel, this);
+		loggingWindowController.contolButton();
 	}
 	public String getLoginTextField_1() {
 		return loginTextField_1.getText();

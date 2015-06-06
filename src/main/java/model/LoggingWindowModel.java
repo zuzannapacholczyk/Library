@@ -1,5 +1,6 @@
 package model;
 
+import start.Synchronizer;
 import view.LoggingWindowView;
 import view.MainWindow;
 import controller.MainWindowController;
@@ -35,6 +36,9 @@ public class LoggingWindowModel {
 			mainWindow.setWelcomeTextLabel(login);
 			mainWindow.setVisible(true);
 			this.view.setVisible(false);
+			if(rights.equals("a") || rights.equals("l")) {
+				Synchronizer synchronizer = new Synchronizer();
+			}
 		} else
 			this.view.setErrorLabel("Wrong login or password");
 

@@ -15,8 +15,9 @@ public class UserAccountPanelModel {
 	}
 
 	private void setListElements() {
-		String[] list = { "a", "l", "r" };
-		this.view.getListRights().setListData(list);
+		this.view.getListRights().addItem("a");
+		this.view.getListRights().addItem("l");
+		this.view.getListRights().addItem("r");
 	}
 
 	public void addUser() {
@@ -98,6 +99,14 @@ public class UserAccountPanelModel {
 			error.showError("Blad podczas wprowadzania zmian.");
 		}
 		view.getChangeButton().setText("Zmien");
+	}
+
+	public void clearFormular() {
+		view.setLoginTextField("");
+		view.setPasswordTextField("");
+		view.setNameTextField("");
+		view.setSurnameTextField("");
+		view.setChosenElement(0);
 	}
 
 }

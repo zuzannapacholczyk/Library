@@ -111,6 +111,7 @@ public class AuthorsPanelView extends JPanel{
 		
 		searchAuthorResultTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(searchAuthorResultTable);
+		searchAuthorResultTable.clearSelection();
 		GridBagConstraints gbc_tableAuthor = new GridBagConstraints();
 		gbc_tableAuthor.gridwidth = 5;
 		gbc_tableAuthor.insets = new Insets(0, 0, 0, 5);

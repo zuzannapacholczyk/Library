@@ -5,8 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,21 +20,23 @@ public class BooksPanelView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -1684637705068628631L;
-	private JButton btnDodaj_1;
+	private JButton btnDodaj;
 	private JButton btnUsun_1;
 	private JTable authorBookResultTable;
 	private JButton btnDodajAutora_1;
-	private JList<String> listDepartments;
+	private JComboBox<String> listDepartments;
 	private JTextField issuerBooksTextField;
 	private JTextField yearBooksTextField;
 	private JTextField titleBooksTextField;
 	private JTextField copyIdBooksTextField;
 	private JTextField bookIdBooksTextField;
 	private String rights = "r";
+	private JButton btnDodajEgzemplarz;
+	private JButton btnWyczysc;
 	public BooksPanelView(String string) {
 		this.setRights(string);
 		GridBagLayout gbl_booksPanel = new GridBagLayout();
-		gbl_booksPanel.columnWidths = new int[]{200,300,50,50,50};
+		gbl_booksPanel.columnWidths = new int[]{200,200, 50, 50,50,50,50};
 		gbl_booksPanel.rowHeights = new int[]{30,30,30,30,30, 30, 30,190};
 		gbl_booksPanel.columnWeights = new double[]{Double.MIN_VALUE};
 		gbl_booksPanel.rowWeights = new double[]{Double.MIN_VALUE};
@@ -132,27 +134,34 @@ public class BooksPanelView extends JPanel {
 		gbc_lblDzial.gridy = 5;
 		this.add(lblDzial, gbc_lblDzial);
 		
-		listDepartments = new JList<String>();
+		listDepartments = new JComboBox<String>();
 		GridBagConstraints gbc_listDepartments = new GridBagConstraints();
 		gbc_listDepartments.insets = new Insets(0, 0, 5, 0);
 		gbc_listDepartments.fill = GridBagConstraints.BOTH;
 		gbc_listDepartments.gridx = 1;
-		gbc_listDepartments.gridy = 7;
+		gbc_listDepartments.gridy = 5;
 		this.add(listDepartments, gbc_listDepartments);
 		
 		btnDodajAutora_1 = new JButton("Dodaj autora");
 		GridBagConstraints gbc_btnDodajAutora_1 = new GridBagConstraints();
 		gbc_btnDodajAutora_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnDodajAutora_1.gridx = 2;
+		gbc_btnDodajAutora_1.gridx = 1;
 		gbc_btnDodajAutora_1.gridy = 6;
 		this.add(btnDodajAutora_1, gbc_btnDodajAutora_1);
 		
-		btnDodaj_1 = new JButton("Dodaj");
+		btnDodaj = new JButton("Dodaj ksiazke");
 		GridBagConstraints gbc_btnDodaj_1 = new GridBagConstraints();
 		gbc_btnDodaj_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnDodaj_1.gridx = 3;
+		gbc_btnDodaj_1.gridx = 2;
 		gbc_btnDodaj_1.gridy = 6;
-		this.add(btnDodaj_1, gbc_btnDodaj_1);
+		this.add(btnDodaj, gbc_btnDodaj_1);
+		
+		btnDodajEgzemplarz = new JButton("Dodaj egzemplarz");
+		GridBagConstraints gbc_btnDodajEgzemplarz = new GridBagConstraints();
+		gbc_btnDodajEgzemplarz.insets = new Insets(0, 0, 5, 5);
+		gbc_btnDodajEgzemplarz.gridx = 3;
+		gbc_btnDodajEgzemplarz.gridy = 6;
+		this.add(btnDodajEgzemplarz, gbc_btnDodajEgzemplarz);
 		
 		btnUsun_1 = new JButton("Usun");
 		GridBagConstraints gbc_btnUsun_1 = new GridBagConstraints();
@@ -160,6 +169,13 @@ public class BooksPanelView extends JPanel {
 		gbc_btnUsun_1.gridx = 4;
 		gbc_btnUsun_1.gridy = 6;
 		this.add(btnUsun_1, gbc_btnUsun_1);
+		
+		btnWyczysc = new JButton("Wyczysc");
+		GridBagConstraints gbc_btnWyczysc_1 = new GridBagConstraints();
+		gbc_btnDodajAutora_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnDodajAutora_1.gridx = 5;
+		gbc_btnDodajAutora_1.gridy = 6;
+		this.add(btnWyczysc, gbc_btnWyczysc_1);
 		
 		authorBookResultTable = new JTable();
 		JScrollPane scrollPane = new JScrollPane(authorBookResultTable);
@@ -183,11 +199,19 @@ public class BooksPanelView extends JPanel {
 	}
 	
 	public JButton getAddButton() {
-		return this.btnDodaj_1;
+		return this.btnDodaj;
+	}
+	
+	public JButton getAddCopyButton() {
+		return this.btnDodajEgzemplarz;
 	}
 	
 	public JButton getRemoveButton() {
 		return this.btnUsun_1;
+	}
+	
+	public JButton getCleanButton() {
+		return this.btnWyczysc;
 	}
 	
 	public JButton getAddAuthorButton() {
@@ -198,31 +222,51 @@ public class BooksPanelView extends JPanel {
 		return this.authorBookResultTable;
 	}
 	
-	public void setListOfDepartments(String[] departments) {
-		this.listDepartments.setListData(departments);
+	public String getSelectedDepartment() {
+		return (String) this.listDepartments.getSelectedItem();
 	}
 	
-	public String getSelectedDepartment() {
-		return this.listDepartments.getSelectedValue();
+	public JComboBox<String> getListDepartments() {
+		return this.listDepartments;
 	}
 	
 	public String getCopyIdTextField() {
 		return copyIdBooksTextField.getText();
 	}
 	
+	public void setCopyIdTextField(String text) {
+		this.copyIdBooksTextField.setText(text);
+	}
+	
 	public String getBookIdTextField() {
 		return bookIdBooksTextField.getText();
+	}
+	
+	public void setBookIdTextField(String text) {
+		this.bookIdBooksTextField.setText(text);
 	}
 	
 	public String getIssuerTexField() {
 		return issuerBooksTextField.getText();
 	}
 	
+	public void setIssuerTextField(String text) {
+		this.issuerBooksTextField.setText(text);
+	}
+	
 	public String getYearTextField() {
 		return yearBooksTextField.getText();
 	}
 	
+	public void setYearTextField(String text) {
+		this.yearBooksTextField.setText(text);
+	}
+	
 	public String getTitleTextField() {
 		return titleBooksTextField.getText();
+	}
+	
+	public void setTitleTextField(String text) {
+		this.titleBooksTextField.setText(text);
 	}
 }

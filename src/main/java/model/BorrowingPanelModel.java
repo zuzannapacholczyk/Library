@@ -47,7 +47,7 @@ public class BorrowingPanelModel {
 			error.showError("Musisz podac numer ksiazki");
 		} else {
 			bookId = Integer.parseInt(view.getBookIdField());
-			book = searchBook.findBookById(bookId, view.getRights());
+			book = searchBook.findBookCopyById(bookId, view.getRights());
 			if (book == null) {
 				ErrorDialog error = new ErrorDialog();
 				error.showError("Bledny numer ksiazki");

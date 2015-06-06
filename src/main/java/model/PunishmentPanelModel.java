@@ -35,24 +35,26 @@ public class PunishmentPanelModel {
 	
 	private void addRowsToTable(List<FoundPunishment> result) {
 		DefaultTableModel model = (DefaultTableModel) this.view.getResultTable().getModel();
-		
-		for(FoundPunishment punishment : result) {
-			model.addRow(punishment.changeIntoList().toArray());
-		}
+		if(result.size()>0)
+			for(FoundPunishment punishment : result) {
+				model.addRow(punishment.changeIntoList().toArray());
+			}
 		
 	}
 
 	public void findPunishments() {
+		removeAllFromTable();
 		int id;
 		String name;
 		String surname;
-		id = Integer.parseInt(view.getIdTextField());
+		
 		name = view.getNameTextField();
 		surname = view.getSurnameTextField();
 		
 		PunishmentOperations punishmentOperations = new PunishmentOperations();
 
 		if (view.getIdTextField().length() > 0) {
+			id = Integer.parseInt(view.getIdTextField());
 			resultList = punishmentOperations.findAllPunishmentsById(id,
 					view.getRights());
 		} else if (name.length() > 0 && surname.length() > 0) {
@@ -97,6 +99,34 @@ public class PunishmentPanelModel {
 			}
 		}
 
+	}
+
+	public void clean() {
+		removeAllFromTable();
+		view.setIdTextField("");
+		view.setNameTextField("");
+		view.setSurnameTextField("");	
+	}
+	
+	private void removeAllFromTable() {
+		DefaultTableModel model = (DefaultTableModel) this.view
+				.getResultTable().getModel();
+		for (int i = 0; i < model.getRowCount(); i++)
+			model.removeRow(i);
+
+	}
+
+	public void payForPunishment(int row) {
+		PunishmentOperations punishmentOperations = new PunishmentOperations();
+		int[] borrowingId = {resultList.get(row).getBorrowingId()};
+		if(punishmentOperations.payForAllPunishments(borrowingId, view.getRights())) {
+			ErrorDialog error = new ErrorDialog();
+			error.showSuccess("Pomyslnie oplacono");
+		}
+		else {
+			ErrorDialog error = new ErrorDialog();
+			error.showError("Blad przy wprowadzaniu oplat");
+		}
 	}
 
 }

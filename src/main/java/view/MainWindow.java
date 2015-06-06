@@ -16,6 +16,8 @@ public class MainWindow extends JFrame {
 	private JLabel welcomeTextLabel;
 	private JButton loggingButton;
 	private JTabbedPane tabbedPane;
+	private BooksPanelView booksPanel;
+	private AuthorsPanelView authorsPanel;
 
 	public MainWindow(String rights) {
 
@@ -58,10 +60,13 @@ public class MainWindow extends JFrame {
 		PunishmentView punishmentPanel = new PunishmentView("a");
 		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
 
-		AuthorsPanelView authorsPanel = new AuthorsPanelView("a");
+		ReaderPanelView readersPanel = new ReaderPanelView("a");
+		tabbedPane.addTab("Czytelnicy", null, readersPanel, null);
+		
+		authorsPanel = new AuthorsPanelView("a");
 		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
 
-		BooksPanelView booksPanel = new BooksPanelView("a");
+		booksPanel = new BooksPanelView("a");
 		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
 
 		DepartmentPanelView departmentPanel = new DepartmentPanelView("a");
@@ -81,11 +86,14 @@ public class MainWindow extends JFrame {
 
 		PunishmentView punishmentPanel = new PunishmentView("l");
 		tabbedPane.addTab("Rozlicz kary", null, punishmentPanel, null);
+		
+		ReaderPanelView readersPanel = new ReaderPanelView("l");
+		tabbedPane.addTab("Czytelnicy", null, readersPanel, null);
 
-		AuthorsPanelView authorsPanel = new AuthorsPanelView("l");
+		authorsPanel = new AuthorsPanelView("l");
 		tabbedPane.addTab("Autorzy", null, authorsPanel, null);
 
-		BooksPanelView booksPanel = new BooksPanelView("l");
+		booksPanel = new BooksPanelView("l");
 		tabbedPane.addTab("Ksiegozbior", null, booksPanel, null);
 
 		DepartmentPanelView departmentPanel = new DepartmentPanelView("l");
@@ -95,6 +103,14 @@ public class MainWindow extends JFrame {
 
 	public JTabbedPane getTabbedPane() {
 		return this.tabbedPane;
+	}
+	
+	public BooksPanelView getBooksPanel() {
+		return this.booksPanel;
+	}
+	
+	public AuthorsPanelView getAuthorsPanel() {
+		return this.authorsPanel;
 	}
 
 	public void setWelcomeTextLabel(String text) {

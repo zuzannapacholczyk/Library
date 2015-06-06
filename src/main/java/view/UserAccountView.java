@@ -5,8 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -23,10 +23,11 @@ public class UserAccountView extends JPanel{
 	private JPasswordField passwordUserTextField;
 	private JTextField nameUserTextField;
 	private JTextField surnameUserTextField;
-	private JList<String> listRights;
+	private JComboBox<String> listRights;
 	private JButton btnDodaj_2;
 	private JButton btnUsun_2;
 	private JButton btnZmien;
+	private JButton btnClear;
 	private String rights = "r";
 
 	public UserAccountView(String string) {
@@ -113,7 +114,7 @@ public class UserAccountView extends JPanel{
 		gbc_lblPrawaUzytkownika.gridy = 5;
 		this.add(lblPrawaUzytkownika, gbc_lblPrawaUzytkownika);
 		
-		listRights = new JList<String>();
+		listRights = new JComboBox<String>();
 		GridBagConstraints gbc_listRights = new GridBagConstraints();
 		gbc_listRights.gridwidth = 4;
 		gbc_listRights.insets = new Insets(0, 0, 5, 0);
@@ -121,6 +122,13 @@ public class UserAccountView extends JPanel{
 		gbc_listRights.gridx = 1;
 		gbc_listRights.gridy = 5;
 		this.add(listRights, gbc_listRights);
+		
+		btnClear = new JButton("Wyczysc");
+		GridBagConstraints gbc_btnClear = new GridBagConstraints();
+		gbc_btnClear.insets = new Insets(0, 0, 5, 5);
+		gbc_btnClear.gridx = 1;
+		gbc_btnClear.gridy = 6;
+		this.add(btnClear, gbc_btnClear);
 		
 		btnDodaj_2 = new JButton("Dodaj");
 		GridBagConstraints gbc_btnDodaj_2 = new GridBagConstraints();
@@ -173,8 +181,16 @@ public class UserAccountView extends JPanel{
 		return loginUserTextField.getText();
 	}
 	
+	public void setLoginTextField(String text) {
+		this.loginUserTextField.setText(text);
+	}
+	
 	public char[] getPasswordTextField() {
 		return passwordUserTextField.getPassword();
+	}
+	
+	public void setPasswordTextField(String text) {
+		this.passwordUserTextField.setText(text);
 	}
 	
 	public String getNameTextField() {
@@ -192,15 +208,19 @@ public class UserAccountView extends JPanel{
 	public void setSurnameTextField(String surname) {
 		this.surnameUserTextField.setText(surname);
 	}
-	public JList<String> getListRights() {
+	public JComboBox<String> getListRights() {
 		return listRights;
 	}
 	
 	public String getChosenElement() {
-		return listRights.getSelectedValue();
+		return (String) listRights.getSelectedItem();
 	}
 	
 	public void setChosenElement(int index) {
 		this.listRights.setSelectedIndex(index);
+	}
+
+	public JButton getClearButton() {
+		return btnClear;
 	}
 }

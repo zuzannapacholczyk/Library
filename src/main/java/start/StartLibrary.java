@@ -1,7 +1,5 @@
 package start;
 
-import model.LoggingWindowModel;
-import controller.LoggingWindowController;
 import view.LoggingWindowView;
 
 public class StartLibrary {
@@ -12,9 +10,5 @@ public class StartLibrary {
 
 	private static void openLoggingWindow() {
 		LoggingWindowView loggingWindowView = new LoggingWindowView();
-		loggingWindowView.setVisible(true);
-		LoggingWindowModel loggingWindowModel = new LoggingWindowModel(loggingWindowView);
-		LoggingWindowController loggingWindowController = new LoggingWindowController(loggingWindowModel, loggingWindowView);
-		loggingWindowController.contolButton();
 	}
 }

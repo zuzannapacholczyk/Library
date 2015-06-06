@@ -63,7 +63,6 @@ public class FoundPunishment {
 	
 	public List<String> changeIntoList() {
 		List<String> elems = new ArrayList<String>();
-		elems.add(Integer.toString(getId()));
 		elems.add(getTitle());
 		elems.add(getName());
 		elems.add(getSurname());
